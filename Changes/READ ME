@@ -1,7 +1,6 @@
-Only these two files were changed. Please replace these files in your program, theya re located in TowerDefenseTemplate>Scripts>TowerDefense>Level.
+Only these two files were changed. Please replace these files in your program, they're located in TowerDefenseTemplate>Scripts>TowerDefense>Level.
 in order to continue with the next wave, you would need a trigger like a button. This is easy to do by just right clicking on "GameUI" and adding a canvas.
 Once the canvas is added, right click and add a button. The button must then have an Onclick function added, specifically from the WaveManager's "ContinueWave" method.
  
  
-Currently there is an error after every wave.
-
+Currently there is an error after every wave but the game progresses normally.
