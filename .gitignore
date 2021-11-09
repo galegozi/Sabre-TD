@@ -60,5 +60,5 @@ sysinfo.txt
 crashlytics-build.properties
 
 # Ignoring downloadable packages
-/Assets/Oculus
-/Assets/UnityTechnologies
+# /Assets/Oculus
+# /Assets/UnityTechnologies
