@@ -92,6 +92,8 @@ namespace Core.Input
 		/// </summary>
 		public PointerInfo basicMouseInfo { get; private set; }
 
+		public PointerInfo basicControllerInfo { get; private set; }
+
 		/// <summary>
 		/// Event called when a pointer press is detected
 		/// </summary>

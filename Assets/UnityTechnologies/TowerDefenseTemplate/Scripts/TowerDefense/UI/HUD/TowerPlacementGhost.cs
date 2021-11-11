@@ -1,5 +1,6 @@
 using TowerDefense.Towers;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 namespace TowerDefense.UI.HUD
 {
@@ -69,7 +70,7 @@ namespace TowerDefense.UI.HUD
 		/// Initialize this ghost
 		/// </summary>
 		/// <param name="tower">The tower controller we're a ghost of</param>
-		public virtual void Initialize(Tower tower)
+		public virtual void Initialize(Tower tower, XRInteractionManager mngr)
 		{
 			m_MeshRenderers = GetComponentsInChildren<MeshRenderer>();
 			controller = tower;
@@ -80,12 +81,20 @@ namespace TowerDefense.UI.HUD
 			ghostCollider = GetComponent<Collider>();
 			m_MoveVel = Vector3.zero;
 			m_ValidPos = false;
-		}
+            gameObject.AddComponent<BoxCollider>();
+			gameObject.GetComponent<BoxCollider>().isTrigger = true;
+            gameObject.AddComponent<Rigidbody>();
+            gameObject.AddComponent<XRGrabInteractable>();
+            //gameObject.GetComponent<XRGrabInteractable>().enabled = true;
+            //gameObject.GetComponent<XRGrabInteractable>().interactionManager = mngr;
+            //TODO: REMOVE
+            //transform.position = new Vector3(0, 10, 0);
+        }
 
-		/// <summary>
-		/// Hide this ghost
-		/// </summary>
-		public virtual void Hide()
+        /// <summary>
+        /// Hide this ghost
+        /// </summary>
+        public virtual void Hide()
 		{
 			gameObject.SetActive(false);
 		}
@@ -95,6 +104,9 @@ namespace TowerDefense.UI.HUD
 		/// </summary>
 		public virtual void Show()
 		{
+			//TODO: REMOVE
+			//transform.position = new Vector3(0, 10, 0);
+
 			if (!gameObject.activeSelf)
 			{
 				gameObject.SetActive(true);
@@ -113,21 +125,24 @@ namespace TowerDefense.UI.HUD
 		/// over invalid locations</param>
 		public virtual void Move(Vector3 worldPosition, Quaternion rotation, bool validLocation)
 		{
-			m_TargetPosition = worldPosition;
+			//TODO: REMOVE
+			//transform.position = new Vector3(0, 10, 0);
 
-			if (!m_ValidPos)
-			{
-				// Immediately move to the given position
-				m_ValidPos = true;
-				transform.position = m_TargetPosition;
-			}
-			
-			transform.rotation = rotation;
-			foreach (MeshRenderer meshRenderer in m_MeshRenderers)
-			{
-				meshRenderer.sharedMaterial = validLocation ? material : invalidPositionMaterial;
-			}
-		}
+            m_TargetPosition = worldPosition;
+
+            if (!m_ValidPos)
+            {
+                // Immediately move to the given position
+                m_ValidPos = true;
+                transform.position = m_TargetPosition;
+            }
+
+            transform.rotation = rotation;
+            foreach (MeshRenderer meshRenderer in m_MeshRenderers)
+            {
+                meshRenderer.sharedMaterial = validLocation ? material : invalidPositionMaterial;
+            }
+        }
 
 
 		/// <summary>
@@ -135,18 +150,28 @@ namespace TowerDefense.UI.HUD
 		/// </summary>
 		protected virtual void Update()
 		{
-			Vector3 currentPos = transform.position;
+            ////TODO: REMOVE
+            //gameObject.SetActive(true);
+            //transform.position = new Vector3(0, 10, 0);
+            //bool validLocation = false;
+            //foreach (MeshRenderer meshRenderer in m_MeshRenderers)
+            //{
+            //	meshRenderer.sharedMaterial = validLocation ? material : invalidPositionMaterial;
+            //}
+            ////END TODO
 
-			if (Vector3.SqrMagnitude(currentPos - m_TargetPosition) > 0.01f)
-			{
-				currentPos = Vector3.SmoothDamp(currentPos, m_TargetPosition, ref m_MoveVel, dampSpeed);
+            Vector3 currentPos = transform.position;
 
-				transform.position = currentPos;
-			}
-			else
-			{
-				m_MoveVel = Vector3.zero;
-			}
-		}
+            if (Vector3.SqrMagnitude(currentPos - m_TargetPosition) > 0.01f)
+            {
+                currentPos = Vector3.SmoothDamp(currentPos, m_TargetPosition, ref m_MoveVel, dampSpeed);
+
+                transform.position = currentPos;
+            }
+            else
+            {
+                m_MoveVel = Vector3.zero;
+            }
+        }
 	}
 }

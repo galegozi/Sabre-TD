@@ -8,6 +8,7 @@ using TowerDefense.Towers;
 using TowerDefense.Towers.Placement;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.XR.Interaction.Toolkit;
 
 namespace TowerDefense.UI.HUD
 {
@@ -165,6 +166,8 @@ namespace TowerDefense.UI.HUD
 		/// Tracks if the ghost is in a valid location and the player can afford it
 		/// </summary>
 		bool m_GhostPlacementPossible;
+
+		public XRInteractionManager mngr;
 
 		/// <summary>
 		/// Gets the current selected tower
@@ -1019,8 +1022,9 @@ namespace TowerDefense.UI.HUD
 			}
 
 			m_CurrentTower = Instantiate(towerToBuild.towerGhostPrefab);
-			m_CurrentTower.Initialize(towerToBuild);
-			m_CurrentTower.Hide();
+			m_CurrentTower.Initialize(towerToBuild, mngr);
+			//m_CurrentTower.Hide(); //TODO: TURN ON
+			//m_CurrentTower.transform.position = new Vector3(0, 10, 0);
 
 			//activate build info
 			if (buildInfoUI != null)
