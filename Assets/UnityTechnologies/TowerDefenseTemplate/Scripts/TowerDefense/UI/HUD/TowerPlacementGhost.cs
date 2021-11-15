@@ -72,19 +72,30 @@ namespace TowerDefense.UI.HUD
 		/// <param name="tower">The tower controller we're a ghost of</param>
 		public virtual void Initialize(Tower tower, XRInteractionManager mngr)
 		{
+			gameObject.transform.position = new Vector3(1, 1, 1);
 			m_MeshRenderers = GetComponentsInChildren<MeshRenderer>();
 			controller = tower;
 			if (GameUI.instanceExists)
 			{
 				GameUI.instance.SetupRadiusVisualizer(controller, transform);
 			}
+			GetComponent<Collider>().enabled = false;
+			gameObject.AddComponent<BoxCollider>().enabled = true;
+			gameObject.GetComponent<BoxCollider>().size = new Vector3(1, 1, 1);
+			gameObject.AddComponent<MeshRenderer>();
+			gameObject.AddComponent<MeshFilter>();
+			gameObject.GetComponent<MeshFilter>().mesh = Resources.Load<Mesh>("Cube");
 			ghostCollider = GetComponent<Collider>();
+			ghostCollider.isTrigger = false;
 			m_MoveVel = Vector3.zero;
 			m_ValidPos = false;
-            gameObject.AddComponent<BoxCollider>();
-			gameObject.GetComponent<BoxCollider>().isTrigger = true;
-            gameObject.AddComponent<Rigidbody>();
-            gameObject.AddComponent<XRGrabInteractable>();
+			var test = GetComponent<Rigidbody>();
+			GetComponent<Rigidbody>().isKinematic = false;
+			GetComponent<Rigidbody>().useGravity = true;
+			gameObject.AddComponent<XRGrabInteractable>();
+			gameObject.GetComponent<XRGrabInteractable>().interactionLayerMask = 1 << 3;
+			var test1 = GetComponent<XRGrabInteractable>();
+			
             //gameObject.GetComponent<XRGrabInteractable>().enabled = true;
             //gameObject.GetComponent<XRGrabInteractable>().interactionManager = mngr;
             //TODO: REMOVE
@@ -104,9 +115,6 @@ namespace TowerDefense.UI.HUD
 		/// </summary>
 		public virtual void Show()
 		{
-			//TODO: REMOVE
-			//transform.position = new Vector3(0, 10, 0);
-
 			if (!gameObject.activeSelf)
 			{
 				gameObject.SetActive(true);
@@ -125,9 +133,6 @@ namespace TowerDefense.UI.HUD
 		/// over invalid locations</param>
 		public virtual void Move(Vector3 worldPosition, Quaternion rotation, bool validLocation)
 		{
-			//TODO: REMOVE
-			//transform.position = new Vector3(0, 10, 0);
-
             m_TargetPosition = worldPosition;
 
             if (!m_ValidPos)
@@ -150,28 +155,18 @@ namespace TowerDefense.UI.HUD
 		/// </summary>
 		protected virtual void Update()
 		{
-            ////TODO: REMOVE
-            //gameObject.SetActive(true);
-            //transform.position = new Vector3(0, 10, 0);
-            //bool validLocation = false;
-            //foreach (MeshRenderer meshRenderer in m_MeshRenderers)
+            //Vector3 currentPos = transform.position;
+
+            //if (Vector3.SqrMagnitude(currentPos - m_TargetPosition) > 0.01f)
             //{
-            //	meshRenderer.sharedMaterial = validLocation ? material : invalidPositionMaterial;
+            //    currentPos = Vector3.SmoothDamp(currentPos, m_TargetPosition, ref m_MoveVel, dampSpeed);
+
+            //    transform.position = currentPos;
             //}
-            ////END TODO
-
-            Vector3 currentPos = transform.position;
-
-            if (Vector3.SqrMagnitude(currentPos - m_TargetPosition) > 0.01f)
-            {
-                currentPos = Vector3.SmoothDamp(currentPos, m_TargetPosition, ref m_MoveVel, dampSpeed);
-
-                transform.position = currentPos;
-            }
-            else
-            {
-                m_MoveVel = Vector3.zero;
-            }
+            //else
+            //{
+            //    m_MoveVel = Vector3.zero;
+            //}
         }
 	}
 }

@@ -168,14 +168,14 @@ namespace Core.Input
 		/// </summary>
 		void Update()
 		{
-			if (basicMouseInfo != null)
-			{
-				// Mouse was detected as present
-				UpdateMouse();
-			}
-			// Handle touches
-			UpdateTouches();
-		}
+            if (basicMouseInfo != null)
+            {
+                // Mouse was detected as present
+                UpdateMouse();
+            }
+            // Handle touches
+            UpdateTouches();
+        }
 
 		/// <summary>
 		/// Perform logic to update mouse/pointing device

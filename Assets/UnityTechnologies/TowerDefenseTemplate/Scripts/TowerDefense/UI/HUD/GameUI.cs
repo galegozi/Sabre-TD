@@ -1024,7 +1024,6 @@ namespace TowerDefense.UI.HUD
 			m_CurrentTower = Instantiate(towerToBuild.towerGhostPrefab);
 			m_CurrentTower.Initialize(towerToBuild, mngr);
 			//m_CurrentTower.Hide(); //TODO: TURN ON
-			//m_CurrentTower.transform.position = new Vector3(0, 10, 0);
 
 			//activate build info
 			if (buildInfoUI != null)
