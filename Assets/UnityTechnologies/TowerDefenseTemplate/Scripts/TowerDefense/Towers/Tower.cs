@@ -1,6 +1,7 @@
 using System;
 using ActionGameFramework.Health;
 using Core.Utilities;
+using TowerDefense.Affectors;
 using TowerDefense.Level;
 using TowerDefense.Towers.Placement;
 using TowerDefense.UI.HUD;
@@ -86,6 +87,22 @@ namespace TowerDefense.Towers
 		/// The event that fires off when a tower has been destroyed
 		/// </summary>
 		public Action towerDestroyed;
+
+		/// <summary>
+		/// Provide the tower with data to initialize with
+		/// </summary>
+		/// <param name="targetArea">The placement area configuration</param>
+		/// <param name="destination">The destination position</param>
+		public virtual void Initialize(Transform t)
+		{
+			transform.position = t.position;
+			transform.rotation = t.rotation;
+			SetLevel(0);
+			if (LevelManager.instanceExists)
+			{
+				LevelManager.instance.levelStateChanged += OnLevelStateChanged;
+			}
+		}
 
 		/// <summary>
 		/// Provide the tower with data to initialize with
@@ -295,5 +312,11 @@ namespace TowerDefense.Towers
 			bool initialise = current == LevelState.AllEnemiesSpawned || current == LevelState.SpawningEnemies;
 			currentTowerLevel.SetAffectorState(initialise);
 		}
-	}
+
+        public void Update()
+        {
+            var affector = GetComponentInChildren<AttackAffector>();
+            if (!affector.enabled) affector.enabled = true;
+        }
+    }
 }
