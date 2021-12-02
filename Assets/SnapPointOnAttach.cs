@@ -25,8 +25,10 @@ public class SnapPointOnAttach : MonoBehaviour
         args.interactable.gameObject.layer = LayerMask.NameToLayer("PlacementGhosts");
         args.interactable.gameObject.transform.position = transform.position + new Vector3(0, 1, 0);
         args.interactable.gameObject.transform.rotation = transform.rotation;
-        ui.BuyTower(args.interactable.gameObject.transform);
-        emptyBlock.SetActive(true);
-        gameObject.SetActive(false);
+        if (ui.BuyTower(args.interactable.gameObject.transform))
+        {
+            emptyBlock.SetActive(true);
+            gameObject.SetActive(false);
+        }
     }
 }
