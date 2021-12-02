@@ -531,7 +531,7 @@ namespace TowerDefense.UI.HUD
         /// <exception cref="InvalidOperationException">
         /// Throws exception if trying to buy towers in Build Mode
         /// </exception>
-        public void BuyTower(Transform t)
+        public bool BuyTower(Transform t)
         {
             //if (!isBuilding)
             //{
@@ -546,7 +546,9 @@ namespace TowerDefense.UI.HUD
             if (successfulPurchase)
             {
                 PlaceTower(t);
+                return true;
             }
+            return false;
         }
 
         /// <summary>
