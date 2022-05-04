@@ -12,7 +12,7 @@ namespace TowerDefense.UI.HUD
     /// A button controller for spawning towers
     /// </summary>
     [RequireComponent(typeof(RectTransform))]
-    public class TowerSpawnButton : MonoBehaviour, IDragHandler
+    public class SwordButtonHandler : MonoBehaviour
     {
         /// <summary>
         /// The text attached to the button
@@ -29,21 +29,18 @@ namespace TowerDefense.UI.HUD
 
         public Color energyInvalidColor;
 
+        public int cost;
+
         /// <summary>
         /// Fires when the button is tapped
         /// </summary>
-        public event Action<Tower> buttonTapped;
+        // public event Action<Tower> buttonTapped;
 
         /// <summary>
         /// Fires when the pointer is outside of the button bounds
         /// and still down
         /// </summary>
-        public event Action<Tower> draggedOff;
-
-        /// <summary>
-        /// The tower controller that defines the button
-        /// </summary>
-        Tower m_Tower;
+        // public event Action<Tower> draggedOff;
 
         /// <summary>
         /// Cached reference to level currency
@@ -55,20 +52,15 @@ namespace TowerDefense.UI.HUD
         /// </summary>
         RectTransform m_RectTransform;
 
-        /// <summary>
-        /// Checks if the pointer is out of bounds
-        /// and then fires the draggedOff event
-        /// </summary>
-        public virtual void OnDrag(PointerEventData eventData)
-        {
-            if (!RectTransformUtility.RectangleContainsScreenPoint(m_RectTransform, eventData.position))
-            {
-                if (draggedOff != null && m_Currency.CanAfford(m_Tower.purchaseCost))
-                {
-                    draggedOff(m_Tower);
-                }
-            }
-        }
+        // public virtual void OnDrag(PointerEventData eventData)
+        // {
+        //     if (!RectTransformUtility.RectangleContainsScreenPoint(m_RectTransform, eventData.position))
+        //     {
+        //         if (draggedOff != null)
+        //         {
+        //         }
+        //     }
+        // }
 
         /// <summary>
         /// Define the button information for the tower
@@ -76,20 +68,19 @@ namespace TowerDefense.UI.HUD
         /// <param name="towerData">
         /// The tower to initialize the button with
         /// </param>
-        public void InitializeButton(Tower towerData)
+        public void InitializeButton()
         {
-            m_Tower = towerData;
 
-            if (towerData.levels.Length > 0)
-            {
-                TowerLevel firstTower = towerData.levels[0];
-                buttonText.text = firstTower.cost.ToString();
-                towerIcon.sprite = firstTower.levelData.icon;
-            }
-            else
-            {
-                Debug.LogWarning("[Tower Spawn Button] No level data for tower");
-            }
+            // if (towerData.levels.Length > 0)
+            // {
+            // 	TowerLevel firstTower = towerData.levels[0];
+            // 	buttonText.text = firstTower.cost.ToString();
+            // 	towerIcon.sprite = firstTower.levelData.icon;
+            // }
+            // else
+            // {
+            // 	Debug.LogWarning("[Tower Spawn Button] No level data for tower");
+            // }
 
             if (LevelManager.instanceExists)
             {
@@ -111,27 +102,39 @@ namespace TowerDefense.UI.HUD
             m_RectTransform = (RectTransform)transform;
         }
 
-        /// <summary>
-        /// Unsubscribe from events
-        /// </summary>
-        protected virtual void OnDestroy()
+        protected virtual void Start()
         {
-            if (m_Currency != null)
+            if (!LevelManager.instanceExists)
             {
-                m_Currency.currencyChanged -= UpdateButton;
+                Debug.LogError("[UI] No level manager for tower list");
+            }
+            else
+            {
+                InitializeButton();
             }
         }
 
         /// <summary>
+        /// Unsubscribe from events
+        /// </summary>
+        // protected virtual void OnDestroy()
+        // {
+        //     if (m_Currency != null)
+        //     {
+        //         m_Currency.currencyChanged -= UpdateButton;
+        //     }
+        // }
+
+        /// <summary>
         /// The click for when the button is tapped
         /// </summary>
-        public void OnClick()
-        {
-            if (buttonTapped != null && m_Currency.CanAfford(m_Tower.purchaseCost))
-            {
-                buttonTapped(m_Tower);
-            }
-        }
+        // public void OnClick()
+        // {
+        //     if (buttonTapped != null)
+        //     {
+
+        //     }
+        // }
 
         /// <summary>
         /// Update the button's button state based on cost
@@ -140,16 +143,17 @@ namespace TowerDefense.UI.HUD
         {
             if (m_Currency == null)
             {
-                return;
+                buyButton.interactable = false;
+                energyIcon.color = energyInvalidColor;
             }
 
             // Enable button
-            if (m_Currency.CanAfford(m_Tower.purchaseCost) && !buyButton.interactable)
+            if (m_Currency.CanAfford(cost) && !buyButton.interactable)
             {
                 buyButton.interactable = true;
                 energyIcon.color = energyDefaultColor;
             }
-            else if (!m_Currency.CanAfford(m_Tower.purchaseCost) && buyButton.interactable)
+            else if (!m_Currency.CanAfford(cost) && buyButton.interactable)
             {
                 buyButton.interactable = false;
                 energyIcon.color = energyInvalidColor;

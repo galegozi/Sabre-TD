@@ -107,7 +107,7 @@ namespace TowerDefense.UI.HUD
 			m_Tower = null;
 			if (GameUI.instanceExists)
 			{
-				GameUI.instance.HideRadiusVisualizer();
+				//GameUI.instance.HideRadiusVisualizer();
 			}
 			m_Canvas.enabled = false;
 			LevelManager.instance.currency.currencyChanged -= OnCurrencyChanged;
