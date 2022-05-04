@@ -256,7 +256,7 @@ namespace TowerDefense.UI.HUD
                 return;
             }
             State oldState = state;
-            if (oldState == State.Paused || oldState == State.GameOver)
+            if (oldState == State.Paused)
             {
                 Time.timeScale = 1f;
             }
@@ -275,7 +275,7 @@ namespace TowerDefense.UI.HUD
                     {
                         CancelGhostPlacement();
                     }
-                    Time.timeScale = 0f;
+                    // Time.timeScale = 0f;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("newState", newState, null);

@@ -63,7 +63,7 @@ namespace TowerDefense.UI.HUD
         {
             if (!RectTransformUtility.RectangleContainsScreenPoint(m_RectTransform, eventData.position))
             {
-                if (draggedOff != null)
+                if (draggedOff != null && m_Currency.CanAfford(m_Tower.purchaseCost))
                 {
                     draggedOff(m_Tower);
                 }
@@ -127,7 +127,7 @@ namespace TowerDefense.UI.HUD
         /// </summary>
         public void OnClick()
         {
-            if (buttonTapped != null)
+            if (buttonTapped != null && m_Currency.CanAfford(m_Tower.purchaseCost))
             {
                 buttonTapped(m_Tower);
             }
