@@ -22,12 +22,12 @@ namespace TowerDefense.UI.HUD
         /// <summary>
         /// Prefab used to visualize effect radius of tower
         /// </summary>
-        public GameObject radiusVisualizer;
+        // public GameObject radiusVisualizer;
 
         /// <summary>
         /// Offset height for radius visualizer
         /// </summary>
-        public float radiusVisualizerHeight = 0.02f;
+        // public float radiusVisualizerHeight = 0.02f;
 
         /// <summary>
         /// Movement damping factor
@@ -77,7 +77,7 @@ namespace TowerDefense.UI.HUD
             controller = tower;
             if (GameUI.instanceExists)
             {
-                GameUI.instance.SetupRadiusVisualizer(controller, transform);
+                // GameUI.instance.SetupRadiusVisualizer(controller, transform);
             }
             //GetComponent<Collider>().enabled = false;
             //gameObject.AddComponent<BoxCollider>();

@@ -314,7 +314,7 @@
                 {
                     "name": "",
                     "id": "71a4d23f-3e9a-4513-923b-ba388c5e84bf",
-                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "path": "<XRController>{LeftHand}/secondaryTouch",
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
@@ -339,7 +339,7 @@
                     "path": "<XRController>{LeftHand}/Primary2DAxis",
                     "interactions": "Sector(directions=12,sweepBehavior=1),Sector(directions=2,sweepBehavior=2)",
                     "processors": "",
-                    "groups": "Noncontinuous Move",
+                    "groups": "Noncontinuous Move;Generic XR Controller",
                     "action": "Turn",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -745,7 +745,7 @@
                 {
                     "name": "",
                     "id": "1ce80054-410d-4112-a332-50faa7fb4f23",
-                    "path": "<XRController>{RightHand}/gripPressed",
+                    "path": "<XRController>{RightHand}/secondaryTouch",
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",

@@ -113,7 +113,7 @@ namespace TowerDefense.UI.HUD
         /// <summary>
         /// Component that manages the radius visualizers of ghosts and towers
         /// </summary>
-        public RadiusVisualizerController radiusVisualizerController;
+        // public RadiusVisualizerController radiusVisualizerController;
 
         /// <summary>
         /// The UI controller for displaying individual tower data
@@ -256,7 +256,7 @@ namespace TowerDefense.UI.HUD
                 return;
             }
             State oldState = state;
-            if (oldState == State.Paused || oldState == State.GameOver)
+            if (oldState == State.Paused)
             {
                 Time.timeScale = 1f;
             }
@@ -275,7 +275,7 @@ namespace TowerDefense.UI.HUD
                     {
                         CancelGhostPlacement();
                     }
-                    Time.timeScale = 0f;
+                    // Time.timeScale = 0f;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("newState", newState, null);
@@ -402,18 +402,18 @@ namespace TowerDefense.UI.HUD
         /// <summary>
         /// Sets up the radius visualizer for a tower or ghost tower
         /// </summary>
-        public void SetupRadiusVisualizer(Tower tower, Transform ghost = null)
-        {
-            radiusVisualizerController.SetupRadiusVisualizers(tower, ghost);
-        }
+        // public void SetupRadiusVisualizer(Tower tower, Transform ghost = null)
+        // {
+        //     radiusVisualizerController.SetupRadiusVisualizers(tower, ghost);
+        // }
 
         /// <summary>
         /// Hides the radius visualizer
         /// </summary>
-        public void HideRadiusVisualizer()
-        {
-            radiusVisualizerController.HideRadiusVisualizers();
-        }
+        // public void HideRadiusVisualizer()
+        // {
+        //     radiusVisualizerController.HideRadiusVisualizers();
+        // }
 
         /// <summary>
         /// Activates the tower controller UI with the specific information
@@ -436,7 +436,7 @@ namespace TowerDefense.UI.HUD
             {
                 currentSelectedTower.removed += OnTowerDied;
             }
-            radiusVisualizerController.SetupRadiusVisualizers(tower);
+            // radiusVisualizerController.SetupRadiusVisualizers(tower);
 
             if (selectionChanged != null)
             {
@@ -1056,7 +1056,7 @@ namespace TowerDefense.UI.HUD
         protected void OnTowerDied(DamageableBehaviour targetable)
         {
             towerUI.enabled = false;
-            radiusVisualizerController.HideRadiusVisualizers();
+            // radiusVisualizerController.HideRadiusVisualizers();
             DeselectTower();
         }
 
